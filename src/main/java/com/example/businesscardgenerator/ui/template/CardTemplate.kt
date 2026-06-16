@@ -2,10 +2,9 @@ package com.example.businesscardgenerator.ui.template
 
 import android.graphics.Color
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import com.example.businesscardgenerator.data.BusinessCardData
-import com.example.businesscardgenerator.R
 
 interface CardTemplate {
     fun createView(parent: ViewGroup, cardData: BusinessCardData): ConstraintLayout
@@ -17,13 +16,18 @@ class MinimalWhiteTemplate : CardTemplate {
     override fun createView(parent: ViewGroup, cardData: BusinessCardData): ConstraintLayout {
         val layout = ConstraintLayout(parent.context).apply {
             setBackgroundColor(Color.WHITE)
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                dpToPx(540)
+            )
         }
 
-        val padding = dpToPx(16)
+        val padding = dpToPx(20)
         layout.setPadding(padding, padding, padding, padding)
 
         // Name
-        val nameView = android.widget.TextView(parent.context).apply {
+        val nameView = TextView(parent.context).apply {
+            id = android.view.View.generateViewId()
             text = cardData.fullName
             textSize = 28f
             setTypeface(null, android.graphics.Typeface.BOLD)
@@ -46,7 +50,8 @@ class MinimalWhiteTemplate : CardTemplate {
         // Position
         var previousViewId = nameView.id
         if (cardData.position.isNotEmpty()) {
-            val positionView = android.widget.TextView(parent.context).apply {
+            val positionView = TextView(parent.context).apply {
+                id = android.view.View.generateViewId()
                 text = cardData.position
                 textSize = 14f
                 setTextColor(Color.GRAY)
@@ -69,7 +74,8 @@ class MinimalWhiteTemplate : CardTemplate {
 
         // Company
         if (cardData.company.isNotEmpty()) {
-            val companyView = android.widget.TextView(parent.context).apply {
+            val companyView = TextView(parent.context).apply {
+                id = android.view.View.generateViewId()
                 text = cardData.company
                 textSize = 12f
                 setTextColor(Color.parseColor("#666666"))
@@ -90,9 +96,30 @@ class MinimalWhiteTemplate : CardTemplate {
             previousViewId = companyView.id
         }
 
+        // Divider
+        val divider = android.view.View(parent.context).apply {
+            id = android.view.View.generateViewId()
+            setBackgroundColor(Color.parseColor("#E0E0E0"))
+        }
+        layout.addView(divider)
+        val dividerParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.MATCH_CONSTRAINT,
+            dpToPx(1)
+        ).apply {
+            topToBottom = previousViewId
+            startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+            endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+            marginStart = padding
+            marginEnd = padding
+            marginTop = dpToPx(12)
+        }
+        divider.layoutParams = dividerParams
+        previousViewId = divider.id
+
         // Contact info
         if (cardData.phone.isNotEmpty()) {
-            val phoneView = android.widget.TextView(parent.context).apply {
+            val phoneView = TextView(parent.context).apply {
+                id = android.view.View.generateViewId()
                 text = "☎ ${cardData.phone}"
                 textSize = 12f
                 setTextColor(Color.parseColor("#333333"))
@@ -114,7 +141,8 @@ class MinimalWhiteTemplate : CardTemplate {
         }
 
         if (cardData.email.isNotEmpty()) {
-            val emailView = android.widget.TextView(parent.context).apply {
+            val emailView = TextView(parent.context).apply {
+                id = android.view.View.generateViewId()
                 text = "✉ ${cardData.email}"
                 textSize = 12f
                 setTextColor(Color.parseColor("#333333"))
@@ -149,13 +177,18 @@ class TechBlueTemplate : CardTemplate {
     override fun createView(parent: ViewGroup, cardData: BusinessCardData): ConstraintLayout {
         val layout = ConstraintLayout(parent.context).apply {
             setBackgroundColor(Color.parseColor("#003366"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                dpToPx(540)
+            )
         }
 
-        val padding = dpToPx(16)
+        val padding = dpToPx(20)
         layout.setPadding(padding, padding, padding, padding)
 
         // Name
-        val nameView = android.widget.TextView(parent.context).apply {
+        val nameView = TextView(parent.context).apply {
+            id = android.view.View.generateViewId()
             text = cardData.fullName
             textSize = 28f
             setTypeface(null, android.graphics.Typeface.BOLD)
@@ -178,7 +211,8 @@ class TechBlueTemplate : CardTemplate {
         // Position
         var previousViewId = nameView.id
         if (cardData.position.isNotEmpty()) {
-            val positionView = android.widget.TextView(parent.context).apply {
+            val positionView = TextView(parent.context).apply {
+                id = android.view.View.generateViewId()
                 text = cardData.position
                 textSize = 14f
                 setTextColor(Color.parseColor("#66CCFF"))
@@ -201,7 +235,8 @@ class TechBlueTemplate : CardTemplate {
 
         // Company
         if (cardData.company.isNotEmpty()) {
-            val companyView = android.widget.TextView(parent.context).apply {
+            val companyView = TextView(parent.context).apply {
+                id = android.view.View.generateViewId()
                 text = cardData.company
                 textSize = 12f
                 setTextColor(Color.parseColor("#99CCFF"))
@@ -222,9 +257,30 @@ class TechBlueTemplate : CardTemplate {
             previousViewId = companyView.id
         }
 
+        // Divider
+        val divider = android.view.View(parent.context).apply {
+            id = android.view.View.generateViewId()
+            setBackgroundColor(Color.parseColor("#004488"))
+        }
+        layout.addView(divider)
+        val dividerParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.MATCH_CONSTRAINT,
+            dpToPx(1)
+        ).apply {
+            topToBottom = previousViewId
+            startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+            endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+            marginStart = padding
+            marginEnd = padding
+            marginTop = dpToPx(12)
+        }
+        divider.layoutParams = dividerParams
+        previousViewId = divider.id
+
         // Contact info
         if (cardData.phone.isNotEmpty()) {
-            val phoneView = android.widget.TextView(parent.context).apply {
+            val phoneView = TextView(parent.context).apply {
+                id = android.view.View.generateViewId()
                 text = "☎ ${cardData.phone}"
                 textSize = 12f
                 setTextColor(Color.WHITE)
@@ -246,7 +302,8 @@ class TechBlueTemplate : CardTemplate {
         }
 
         if (cardData.email.isNotEmpty()) {
-            val emailView = android.widget.TextView(parent.context).apply {
+            val emailView = TextView(parent.context).apply {
+                id = android.view.View.generateViewId()
                 text = "✉ ${cardData.email}"
                 textSize = 12f
                 setTextColor(Color.WHITE)
@@ -281,13 +338,18 @@ class AcademicGrayTemplate : CardTemplate {
     override fun createView(parent: ViewGroup, cardData: BusinessCardData): ConstraintLayout {
         val layout = ConstraintLayout(parent.context).apply {
             setBackgroundColor(Color.parseColor("#F5F5F5"))
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                dpToPx(540)
+            )
         }
 
-        val padding = dpToPx(16)
+        val padding = dpToPx(20)
         layout.setPadding(padding, padding, padding, padding)
 
         // Name
-        val nameView = android.widget.TextView(parent.context).apply {
+        val nameView = TextView(parent.context).apply {
+            id = android.view.View.generateViewId()
             text = cardData.fullName
             textSize = 26f
             setTypeface(null, android.graphics.Typeface.BOLD)
@@ -310,7 +372,8 @@ class AcademicGrayTemplate : CardTemplate {
         // Position
         var previousViewId = nameView.id
         if (cardData.position.isNotEmpty()) {
-            val positionView = android.widget.TextView(parent.context).apply {
+            val positionView = TextView(parent.context).apply {
+                id = android.view.View.generateViewId()
                 text = cardData.position
                 textSize = 13f
                 setTypeface(null, android.graphics.Typeface.ITALIC)
@@ -334,7 +397,8 @@ class AcademicGrayTemplate : CardTemplate {
 
         // Company
         if (cardData.company.isNotEmpty()) {
-            val companyView = android.widget.TextView(parent.context).apply {
+            val companyView = TextView(parent.context).apply {
+                id = android.view.View.generateViewId()
                 text = cardData.company
                 textSize = 11f
                 setTextColor(Color.parseColor("#777777"))
@@ -357,6 +421,7 @@ class AcademicGrayTemplate : CardTemplate {
 
         // Divider
         val divider = android.view.View(parent.context).apply {
+            id = android.view.View.generateViewId()
             setBackgroundColor(Color.parseColor("#CCCCCC"))
         }
         layout.addView(divider)
@@ -376,7 +441,8 @@ class AcademicGrayTemplate : CardTemplate {
 
         // Contact info
         if (cardData.phone.isNotEmpty()) {
-            val phoneView = android.widget.TextView(parent.context).apply {
+            val phoneView = TextView(parent.context).apply {
+                id = android.view.View.generateViewId()
                 text = "电话: ${cardData.phone}"
                 textSize = 11f
                 setTextColor(Color.parseColor("#333333"))
@@ -398,7 +464,8 @@ class AcademicGrayTemplate : CardTemplate {
         }
 
         if (cardData.email.isNotEmpty()) {
-            val emailView = android.widget.TextView(parent.context).apply {
+            val emailView = TextView(parent.context).apply {
+                id = android.view.View.generateViewId()
                 text = "邮箱: ${cardData.email}"
                 textSize = 11f
                 setTextColor(Color.parseColor("#333333"))
@@ -426,5 +493,24 @@ class AcademicGrayTemplate : CardTemplate {
 
     private fun dpToPx(dp: Int): Int {
         return (dp * android.content.res.Resources.getSystem().displayMetrics.density).toInt()
+    }
+}
+
+object TemplateFactory {
+    fun getTemplate(templateId: String): CardTemplate {
+        return when (templateId) {
+            "minimal_white" -> MinimalWhiteTemplate()
+            "tech_blue" -> TechBlueTemplate()
+            "academic_gray" -> AcademicGrayTemplate()
+            else -> MinimalWhiteTemplate()
+        }
+    }
+
+    fun getAllTemplates(): List<CardTemplate> {
+        return listOf(
+            MinimalWhiteTemplate(),
+            TechBlueTemplate(),
+            AcademicGrayTemplate()
+        )
     }
 }
